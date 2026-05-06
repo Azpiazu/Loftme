@@ -7,6 +7,13 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Progress } from '@/components/ui/progress'
+import { Switch } from '@/components/ui/switch'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { 
   BadgeCheck, 
   Mail, 
@@ -240,6 +247,7 @@ export function DashboardPreview() {
                     phone="+36 30 123 4567"
                     status="new"
                     photos={['/images/apartment-1.jpg', '/images/apartment-2.jpg', '/images/apartment-3.jpg']}
+                    docAccessEnabled={true}
                   />
                   <MessageCard
                     landlordName="Peter Nagy"
@@ -393,7 +401,8 @@ function MessageCard({
   email,
   phone,
   status,
-  photos
+  photos,
+  docAccessEnabled = false
 }: {
   landlordName: string
   landlordType: string
@@ -404,7 +413,9 @@ function MessageCard({
   phone?: string
   status: 'new' | 'interested' | 'waiting' | 'declined' | 'reported'
   photos?: string[]
+  docAccessEnabled?: boolean
 }) {
+  const [docAccess, setDocAccess] = useState(docAccessEnabled)
   const statusColors = {
     new: 'bg-primary/10 text-primary',
     interested: 'bg-success/10 text-success',
@@ -459,7 +470,7 @@ function MessageCard({
         )}
       </div>
 
-      <div className="flex flex-wrap gap-2 pt-2 border-t border-border/50">
+      <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border/50">
         <Button size="sm" variant="default">View details</Button>
         <Button size="sm" variant="outline">
           <Heart className="h-4 w-4 mr-1" />
@@ -477,6 +488,31 @@ function MessageCard({
           <Flag className="h-4 w-4 mr-1" />
           Report
         </Button>
+        
+        {/* Document access switch */}
+        <div className="ml-auto">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center gap-2">
+                  <FileText className={`h-4 w-4 ${docAccess ? 'text-primary' : 'text-muted-foreground'}`} />
+                  <Switch
+                    checked={docAccess}
+                    onCheckedChange={setDocAccess}
+                    className="data-[state=checked]:bg-primary"
+                  />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p className="text-xs">
+                  {docAccess 
+                    ? 'This landlord can view your documents' 
+                    : 'Allow this landlord to view your documents'}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </div>
     </div>
   )

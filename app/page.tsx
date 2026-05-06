@@ -203,7 +203,7 @@ export default function LandingPage() {
       <footer className="border-t border-border py-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <Logo size="lg" linkToHome={false} />
+            <Logo size="md" linkToHome={false} />
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
               <Link href="/#for-renters" className="hover:text-foreground transition-colors">For renters</Link>
               <Link href="/#for-landlords" className="hover:text-foreground transition-colors">For landlords</Link>

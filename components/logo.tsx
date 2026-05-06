@@ -7,9 +7,10 @@ interface LogoProps {
   className?: string
   size?: 'sm' | 'md' | 'lg'
   linkToHome?: boolean
+  showSlogan?: boolean
 }
 
-export function Logo({ className = '', size = 'md', linkToHome = true }: LogoProps) {
+export function Logo({ className = '', size = 'md', linkToHome = true, showSlogan = false }: LogoProps) {
   const sizes = {
     sm: { height: 32, width: 110 },
     md: { height: 40, width: 140 },
@@ -19,7 +20,7 @@ export function Logo({ className = '', size = 'md', linkToHome = true }: LogoPro
   const { height, width } = sizes[size]
 
   const LogoContent = (
-    <div className={`flex items-center ${className}`}>
+    <div className={`flex flex-col ${className}`}>
       <Image
         src="/loftme-logo.svg"
         alt="Loftme"
@@ -27,6 +28,9 @@ export function Logo({ className = '', size = 'md', linkToHome = true }: LogoPro
         height={height}
         priority
       />
+      {showSlogan && (
+        <span className="text-[10px] text-foreground/70 tracking-wide mt-0.5">Built for trust</span>
+      )}
     </div>
   )
 

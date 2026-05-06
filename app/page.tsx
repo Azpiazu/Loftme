@@ -2,6 +2,7 @@ import { Navbar } from '@/components/navbar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ProfilePreviewCard } from '@/components/profile-preview-card'
+import { DashboardPreview } from '@/components/dashboard-preview'
 import { Logo } from '@/components/logo'
 import { HeroSearch } from '@/components/hero-search'
 import Link from 'next/link'
@@ -70,6 +71,13 @@ export default function LandingPage() {
               className="relative transform lg:rotate-1 lg:hover:rotate-0 transition-transform duration-300 shadow-xl"
             />
           </div>
+        </div>
+      </section>
+
+      {/* Dashboard Preview Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-background to-secondary/20">
+        <div className="container mx-auto px-4">
+          <DashboardPreview />
         </div>
       </section>
 

@@ -19,13 +19,13 @@ export function Logo({ className = '', size = 'md', linkToHome = true }: LogoPro
   const { height, width } = sizes[size]
 
   const LogoContent = (
-    <div className={`flex flex-col ${className}`}>
+    <div className={`flex flex-col ${className}`} style={{ height }}>
       <Image
         src="/loftme-logo.svg"
         alt="Loftme"
         width={width}
         height={height}
-        style={{ width: 'auto', height: height, maxHeight: height }}
+        style={{ width: 'auto', height: '100%' }}
         priority
       />
     </div>

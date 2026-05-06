@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { TrustBadgeList } from '@/components/trust-badge'
 import { Progress } from '@/components/ui/progress'
-import { mockRenter, mockLandlordMessages } from '@/lib/mock-data'
+import { mockRenter, mockLandlordMessages, mockLandlordDocumentAccess } from '@/lib/mock-data'
 import { cn } from '@/lib/utils'
 import { 
   Eye, 
@@ -27,13 +27,16 @@ import {
   LogOut,
   Settings,
   Wallet,
-  Mail
+  Mail,
+  Lock
 } from 'lucide-react'
 
 export default function DashboardPage() {
   const [copied, setCopied] = useState(false)
   const renter = mockRenter
   const newMessagesCount = mockLandlordMessages.filter(m => m.status === 'new').length
+  const accessGrantedCount = mockLandlordDocumentAccess.filter(l => l.documentAccess === 'granted').length
+  const accessRequestedCount = mockLandlordDocumentAccess.filter(l => l.documentAccess === 'requested').length
 
   const copyShareLink = () => {
     navigator.clipboard.writeText(`https://${renter.shareLink}`)
@@ -48,6 +51,17 @@ export default function DashboardPage() {
       href: '/dashboard/messages',
       description: newMessagesCount > 0 ? `${newMessagesCount} new message${newMessagesCount > 1 ? 's' : ''}` : 'View property offers',
       highlight: newMessagesCount > 0
+    },
+    { 
+      title: 'Document access', 
+      icon: Lock, 
+      href: '/dashboard/documents',
+      description: accessRequestedCount > 0 
+        ? `${accessRequestedCount} pending request${accessRequestedCount > 1 ? 's' : ''}` 
+        : accessGrantedCount > 0 
+          ? `${accessGrantedCount} landlord${accessGrantedCount > 1 ? 's' : ''} have access`
+          : 'Control who sees your documents',
+      highlight: accessRequestedCount > 0
     },
     { 
       title: 'View public profile', 

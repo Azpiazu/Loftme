@@ -274,3 +274,79 @@ export const reportReasons = [
   'Spam',
   'Other'
 ]
+
+// Document access types
+export type DocumentAccessStatus = 'no-access' | 'requested' | 'granted' | 'revoked'
+
+export interface RenterDocument {
+  id: string
+  name: string
+  type: 'employment' | 'income' | 'student' | 'reference' | 'id-confirmation' | 'other'
+  uploadedAt: string
+}
+
+export interface LandlordDocumentAccess {
+  landlordId: string
+  landlordName: string
+  landlordRole: LandlordRole
+  propertyDescription: string
+  propertyArea: string
+  monthlyRent: string
+  messageStatus: MessageStatus
+  documentAccess: DocumentAccessStatus
+  documentsShared: string[] // document IDs
+  accessGrantedAt?: string
+  accessRevokedAt?: string
+}
+
+export const mockRenterDocuments: RenterDocument[] = [
+  { id: 'doc-1', name: 'Proof of employment', type: 'employment', uploadedAt: '2024-07-20' },
+  { id: 'doc-2', name: 'Proof of income', type: 'income', uploadedAt: '2024-07-20' },
+  { id: 'doc-3', name: 'Student certificate', type: 'student', uploadedAt: '2024-07-22' },
+  { id: 'doc-4', name: 'Reference letter', type: 'reference', uploadedAt: '2024-07-25' },
+  { id: 'doc-5', name: 'ID verification confirmation', type: 'id-confirmation', uploadedAt: '2024-07-18' },
+]
+
+export const mockLandlordDocumentAccess: LandlordDocumentAccess[] = [
+  {
+    landlordId: 'msg-1',
+    landlordName: 'Anna Kovács',
+    landlordRole: 'private-landlord',
+    propertyDescription: 'Furnished 1-bedroom near Oktogon',
+    propertyArea: 'District VI',
+    monthlyRent: '€1,050/month',
+    messageStatus: 'new',
+    documentAccess: 'granted',
+    documentsShared: ['doc-1', 'doc-2', 'doc-4'],
+    accessGrantedAt: '2024-08-15'
+  },
+  {
+    landlordId: 'msg-2',
+    landlordName: 'Peter Nagy',
+    landlordRole: 'agent',
+    propertyDescription: 'Modern studio in the heart of Pest',
+    propertyArea: 'District VII',
+    monthlyRent: '€850/month',
+    messageStatus: 'interested',
+    documentAccess: 'no-access',
+    documentsShared: []
+  },
+  {
+    landlordId: 'msg-3',
+    landlordName: 'Maria Tóth',
+    landlordRole: 'property-manager',
+    propertyDescription: 'Spacious 1-bedroom with parking',
+    propertyArea: 'District XIII',
+    monthlyRent: '€1,200/month',
+    messageStatus: 'waiting',
+    documentAccess: 'requested',
+    documentsShared: []
+  },
+]
+
+export const documentAccessStatusLabels: Record<DocumentAccessStatus, string> = {
+  'no-access': 'No access',
+  'requested': 'Access requested',
+  'granted': 'Access granted',
+  'revoked': 'Access revoked'
+}

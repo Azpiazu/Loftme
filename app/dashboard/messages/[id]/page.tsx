@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
@@ -27,6 +28,8 @@ import {
 } from '@/components/ui/select'
 import { 
   mockLandlordMessages, 
+  mockLandlordDocumentAccess,
+  mockRenterDocuments,
   landlordRoleLabels,
   reportReasons,
   type LandlordMessage
@@ -47,7 +50,10 @@ import {
   Flag,
   AlertTriangle,
   Check,
-  Image as ImageIcon
+  Image as ImageIcon,
+  FileText,
+  Lock,
+  Unlock
 } from 'lucide-react'
 
 function ReplyModal({ landlordName }: { landlordName: string }) {
@@ -269,6 +275,99 @@ function ReportModal({ landlordName }: { landlordName: string }) {
   )
 }
 
+function DocumentSharingPanel({ messageId, landlordName }: { messageId: string; landlordName: string }) {
+  const [selectedDocs, setSelectedDocs] = useState<string[]>([])
+  const [saved, setSaved] = useState(false)
+  
+  // Find existing access for this landlord
+  const existingAccess = mockLandlordDocumentAccess.find(l => l.landlordId === messageId)
+  const documentsShared = existingAccess?.documentsShared || []
+  const hasAccess = documentsShared.length > 0
+
+  const toggleDoc = (docId: string) => {
+    setSelectedDocs(prev => 
+      prev.includes(docId) 
+        ? prev.filter(id => id !== docId)
+        : [...prev, docId]
+    )
+  }
+
+  const handleShare = () => {
+    setSaved(true)
+    setTimeout(() => setSaved(false), 2000)
+  }
+
+  return (
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-base flex items-center gap-2">
+          <FileText className="h-4 w-4" />
+          Share documents
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <p className="text-sm text-muted-foreground">
+          Choose which private documents this landlord can view.
+        </p>
+        
+        {/* Current status */}
+        <div className="flex items-center gap-2 text-sm">
+          {hasAccess ? (
+            <>
+              <Unlock className="h-4 w-4 text-success" />
+              <span className="text-success">{documentsShared.length} documents shared</span>
+            </>
+          ) : (
+            <>
+              <Lock className="h-4 w-4 text-muted-foreground" />
+              <span className="text-muted-foreground">No documents shared</span>
+            </>
+          )}
+        </div>
+
+        {saved ? (
+          <div className="p-3 bg-success/10 rounded-lg text-center">
+            <Check className="h-5 w-5 text-success mx-auto mb-1" />
+            <p className="text-sm text-success font-medium">Access updated</p>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {mockRenterDocuments.slice(0, 3).map((doc) => (
+              <div key={doc.id} className="flex items-center space-x-2">
+                <Checkbox 
+                  id={`doc-${doc.id}`}
+                  checked={selectedDocs.includes(doc.id) || documentsShared.includes(doc.id)}
+                  onCheckedChange={() => toggleDoc(doc.id)}
+                />
+                <Label htmlFor={`doc-${doc.id}`} className="text-sm font-normal">
+                  {doc.name}
+                </Label>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="flex gap-2 pt-2">
+          <Button size="sm" onClick={handleShare} className="flex-1">
+            {hasAccess ? 'Update access' : 'Share selected'}
+          </Button>
+          {hasAccess && (
+            <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive">
+              Revoke
+            </Button>
+          )}
+        </div>
+
+        <Button variant="link" size="sm" className="w-full text-xs p-0 h-auto" asChild>
+          <Link href="/dashboard/documents">
+            Manage all document access
+          </Link>
+        </Button>
+      </CardContent>
+    </Card>
+  )
+}
+
 export default function MessageDetailPage() {
   const params = useParams()
   const messageId = params.id as string
@@ -458,6 +557,9 @@ export default function MessageDetailPage() {
                 </Button>
               </CardContent>
             </Card>
+
+            {/* Document sharing panel */}
+            <DocumentSharingPanel messageId={message.id} landlordName={message.landlordName} />
 
             <p className="text-xs text-center text-muted-foreground px-4">
               Your contact details remain private until you choose to share them.

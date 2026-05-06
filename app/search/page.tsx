@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
 import { Button } from '@/components/ui/button'
@@ -29,6 +30,7 @@ import {
 } from 'lucide-react'
 
 export default function LandlordSearchPage() {
+  const searchParams = useSearchParams()
   const [showFilters, setShowFilters] = useState(false)
   const [filters, setFilters] = useState({
     city: 'Budapest',
@@ -40,6 +42,14 @@ export default function LandlordSearchPage() {
     pets: '',
     verified: false
   })
+
+  // Read city from URL query params on mount
+  useEffect(() => {
+    const cityFromUrl = searchParams.get('city')
+    if (cityFromUrl) {
+      setFilters(prev => ({ ...prev, city: cityFromUrl }))
+    }
+  }, [searchParams])
 
   const toggleArea = (area: string) => {
     setFilters(prev => ({

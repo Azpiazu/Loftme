@@ -74,13 +74,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Dashboard Preview Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-background to-secondary/20">
-        <div className="container mx-auto px-4">
-          <DashboardPreview />
-        </div>
-      </section>
-
       {/* How it works for Renters */}
       <section id="for-renters" className="bg-secondary/30 py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -91,7 +84,7 @@ export default function LandingPage() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
             <FeatureCard
               icon={<UserPlus className="h-6 w-6 text-primary" />}
               title="Create your profile"
@@ -108,6 +101,9 @@ export default function LandingPage() {
               description="Use your Loftme profile link, PDF profile, email message or WhatsApp intro."
             />
           </div>
+
+          {/* Dashboard Preview - Expandable */}
+          <DashboardPreview />
         </div>
       </section>
 

@@ -28,24 +28,53 @@ import {
   Copy,
   Download,
   ChevronRight,
+  ChevronDown,
   Image as ImageIcon,
   Flag,
   ThumbsDown,
   HelpCircle,
-  Heart
+  Heart,
+  X
 } from 'lucide-react'
 
 export function DashboardPreview() {
   const [activeMessageTab, setActiveMessageTab] = useState('new')
+  const [expanded, setExpanded] = useState(false)
+
+  if (!expanded) {
+    return (
+      <div className="text-center py-8 px-4 bg-card rounded-xl border border-border/50 shadow-sm">
+        <div className="max-w-lg mx-auto">
+          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+            <Eye className="h-6 w-6 text-primary" />
+          </div>
+          <h3 className="text-lg font-semibold text-foreground mb-2">See what your dashboard looks like</h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            Preview your renter dashboard with messages, document access, AI tools and privacy controls.
+          </p>
+          <Button onClick={() => setExpanded(true)}>
+            <ChevronDown className="h-4 w-4 mr-2" />
+            Show dashboard preview
+          </Button>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="text-center">
-        <h2 className="text-3xl font-bold text-foreground mb-2">Your Loftme profile</h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Manage your renter profile, landlord messages, verification badges and document sharing.
-        </p>
+    <div className="space-y-6">
+      {/* Header with close button */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="text-xl font-bold text-foreground">Your Loftme dashboard</h3>
+          <p className="text-sm text-muted-foreground">
+            Manage your renter profile, landlord messages, verification badges and document sharing.
+          </p>
+        </div>
+        <Button variant="ghost" size="sm" onClick={() => setExpanded(false)}>
+          <X className="h-4 w-4 mr-2" />
+          Close preview
+        </Button>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
@@ -286,6 +315,14 @@ export function DashboardPreview() {
             </CardContent>
           </Card>
         </div>
+      </div>
+
+      {/* Collapse button at bottom */}
+      <div className="text-center pt-4">
+        <Button variant="outline" size="sm" onClick={() => setExpanded(false)}>
+          <X className="h-4 w-4 mr-2" />
+          Close dashboard preview
+        </Button>
       </div>
     </div>
   )

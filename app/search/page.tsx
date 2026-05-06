@@ -11,8 +11,7 @@ import { Label } from '@/components/ui/label'
 import { TrustBadgeList } from '@/components/trust-badge'
 import { mockRenters, preferredAreaOptions, leaseLengthOptions } from '@/lib/mock-data'
 import { cn } from '@/lib/utils'
-import { RequestContactModal } from '@/components/request-contact-modal'
-import { RequestDocumentModal } from '@/components/request-document-modal'
+import { LandlordContactModal } from '@/components/landlord-contact-modal'
 import { 
   Search,
   Filter,
@@ -434,8 +433,10 @@ function RenterCard({ renter }: { renter: typeof mockRenters[0] }) {
                 View profile
               </Link>
             </Button>
-            <RequestContactModal renterName={renter.firstName} />
-            <RequestDocumentModal renterName={renter.firstName} />
+            <LandlordContactModal 
+              renterName={renter.firstName} 
+              trigger={<Button size="sm">Contact renter</Button>}
+            />
           </div>
         </div>
       </CardContent>

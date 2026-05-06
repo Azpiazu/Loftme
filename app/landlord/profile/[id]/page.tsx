@@ -8,8 +8,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { TrustBadgeList } from '@/components/trust-badge'
 import { mockRenters } from '@/lib/mock-data'
-import { RequestContactModal } from '@/components/request-contact-modal'
-import { RequestDocumentModal } from '@/components/request-document-modal'
+import { LandlordContactModal } from '@/components/landlord-contact-modal'
 import { 
   ArrowLeft,
   Home,
@@ -151,10 +150,9 @@ export default function LandlordProfileViewPage({ params }: { params: Promise<{ 
                 <Lock size={18} className="text-muted-foreground mt-0.5" />
                 <div className="flex-1">
                   <h3 className="font-medium text-foreground mb-1">Documents</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Documents available privately on request.
+                  <p className="text-sm text-muted-foreground">
+                    Documents available privately on request. Use the contact form below to request access.
                   </p>
-                  <RequestDocumentModal renterName={renter.firstName} />
                 </div>
               </div>
             </div>
@@ -164,11 +162,11 @@ export default function LandlordProfileViewPage({ params }: { params: Promise<{ 
               <div className="flex items-start gap-3">
                 <Shield size={18} className="text-primary mt-0.5" />
                 <div className="flex-1">
-                  <h3 className="font-medium text-foreground mb-1">Contact information</h3>
+                  <h3 className="font-medium text-foreground mb-1">Contact this renter</h3>
                   <p className="text-sm text-muted-foreground mb-3">
-                    This renter has chosen to keep contact details private. You can request contact access through Loftme.
+                    Share your property details and contact information. The renter will decide whether to reply.
                   </p>
-                  <RequestContactModal renterName={renter.firstName} />
+                  <LandlordContactModal renterName={renter.firstName} />
                 </div>
               </div>
             </div>

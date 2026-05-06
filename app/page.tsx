@@ -2,6 +2,7 @@ import { Navbar } from '@/components/navbar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ProfilePreviewCard } from '@/components/profile-preview-card'
+import { DashboardPreview } from '@/components/dashboard-preview'
 import { Logo } from '@/components/logo'
 import { HeroSearch } from '@/components/hero-search'
 import Link from 'next/link'
@@ -83,7 +84,7 @@ export default function LandingPage() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
             <FeatureCard
               icon={<UserPlus className="h-6 w-6 text-primary" />}
               title="Create your profile"
@@ -100,6 +101,9 @@ export default function LandingPage() {
               description="Use your Loftme profile link, PDF profile, email message or WhatsApp intro."
             />
           </div>
+
+          {/* Dashboard Preview - Expandable */}
+          <DashboardPreview />
         </div>
       </section>
 

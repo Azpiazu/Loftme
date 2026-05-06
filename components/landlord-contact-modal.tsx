@@ -20,7 +20,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { MessageSquare, Check, Upload, X, Lock } from 'lucide-react'
+import { Checkbox } from '@/components/ui/checkbox'
+import { MessageSquare, Check, Upload, X, Lock, FileText, ChevronDown } from 'lucide-react'
+import { documentTypes } from '@/lib/mock-data'
 
 interface LandlordContactModalProps {
   renterName: string
@@ -31,6 +33,8 @@ export function LandlordContactModal({ renterName, trigger }: LandlordContactMod
   const [open, setOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [photos, setPhotos] = useState<string[]>([])
+  const [expandDocuments, setExpandDocuments] = useState(false)
+  const [selectedDocs, setSelectedDocs] = useState<string[]>([])
   const [form, setForm] = useState({
     name: '',
     role: '',
@@ -61,6 +65,8 @@ export function LandlordContactModal({ renterName, trigger }: LandlordContactMod
         listingLink: ''
       })
       setPhotos([])
+      setSelectedDocs([])
+      setExpandDocuments(false)
     }, 2500)
   }
 
@@ -76,6 +82,14 @@ export function LandlordContactModal({ renterName, trigger }: LandlordContactMod
 
   const removePhoto = (index: number) => {
     setPhotos(prev => prev.filter((_, i) => i !== index))
+  }
+
+  const toggleDoc = (doc: string) => {
+    setSelectedDocs(prev => 
+      prev.includes(doc) 
+        ? prev.filter(d => d !== doc)
+        : [...prev, doc]
+    )
   }
 
   return (
@@ -255,6 +269,43 @@ export function LandlordContactModal({ renterName, trigger }: LandlordContactMod
                   onChange={(e) => setForm({ ...form, listingLink: e.target.value })}
                   placeholder="https://..."
                 />
+              </div>
+
+              {/* Document request section */}
+              <div className="border rounded-lg p-3 bg-muted/50">
+                <button
+                  type="button"
+                  onClick={() => setExpandDocuments(!expandDocuments)}
+                  className="flex items-center justify-between w-full text-sm font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <FileText className="h-4 w-4" />
+                    Request documents (optional)
+                  </span>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${expandDocuments ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {expandDocuments && (
+                  <div className="mt-3 space-y-3 pt-3 border-t border-border/50">
+                    <p className="text-xs text-muted-foreground">
+                      Select which documents you&apos;d like the renter to share with you.
+                    </p>
+                    <div className="space-y-2">
+                      {documentTypes.map((doc) => (
+                        <div key={doc} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`doc-${doc}`}
+                            checked={selectedDocs.includes(doc)}
+                            onCheckedChange={() => toggleDoc(doc)}
+                          />
+                          <Label htmlFor={`doc-${doc}`} className="text-sm font-normal cursor-pointer">
+                            {doc}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <Button type="submit" className="w-full">

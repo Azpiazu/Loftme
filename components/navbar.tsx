@@ -11,8 +11,6 @@ import { cn } from '@/lib/utils'
 const navLinks = [
   { href: '/#for-renters', label: 'For renters' },
   { href: '/#for-landlords', label: 'For landlords' },
-  { href: '/search', label: 'Search renters' },
-  { href: '/#privacy', label: 'Privacy' },
 ]
 
 export function Navbar() {

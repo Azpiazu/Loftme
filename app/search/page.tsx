@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
 import { Button } from '@/components/ui/button'
@@ -29,6 +30,35 @@ import {
 } from 'lucide-react'
 
 export default function LandlordSearchPage() {
+  return (
+    <Suspense fallback={<SearchPageSkeleton />}>
+      <SearchPageContent />
+    </Suspense>
+  )
+}
+
+function SearchPageSkeleton() {
+  return (
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <main className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <div className="h-9 w-64 bg-muted animate-pulse rounded mb-2" />
+          <div className="h-5 w-96 bg-muted animate-pulse rounded" />
+        </div>
+        <div className="h-10 w-full bg-muted animate-pulse rounded mb-6" />
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-48 bg-muted animate-pulse rounded-lg" />
+          ))}
+        </div>
+      </main>
+    </div>
+  )
+}
+
+function SearchPageContent() {
+  const searchParams = useSearchParams()
   const [showFilters, setShowFilters] = useState(false)
   const [filters, setFilters] = useState({
     city: 'Budapest',
@@ -40,6 +70,14 @@ export default function LandlordSearchPage() {
     pets: '',
     verified: false
   })
+
+  // Read city from URL query params on mount
+  useEffect(() => {
+    const cityFromUrl = searchParams.get('city')
+    if (cityFromUrl) {
+      setFilters(prev => ({ ...prev, city: cityFromUrl }))
+    }
+  }, [searchParams])
 
   const toggleArea = (area: string) => {
     setFilters(prev => ({

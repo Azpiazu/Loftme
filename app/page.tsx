@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ProfilePreviewCard } from '@/components/profile-preview-card'
 import { Logo } from '@/components/logo'
+import { HeroSearch } from '@/components/hero-search'
 import Link from 'next/link'
 import { 
   UserPlus, 
@@ -46,6 +47,12 @@ export default function LandingPage() {
               <Lock size={14} />
               Your documents stay private. You decide what to share.
             </p>
+
+            {/* Landlord Search */}
+            <div className="pt-6 border-t border-border/50">
+              <p className="text-sm text-muted-foreground mb-3">Are you a landlord? Search verified renters:</p>
+              <HeroSearch />
+            </div>
           </div>
           
           <div className="lg:pl-8 relative">

@@ -25,6 +25,7 @@ export function Logo({ className = '', size = 'md', linkToHome = true }: LogoPro
         alt="Loftme"
         width={width}
         height={height}
+        className="w-auto h-auto"
         priority
       />
     </div>

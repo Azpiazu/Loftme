@@ -158,3 +158,119 @@ export const documentTypes = [
   'Reference letter',
   'Other'
 ]
+
+// Landlord contact request types
+export type LandlordRole = 'private-landlord' | 'agent' | 'property-manager'
+export type MessageStatus = 'new' | 'interested' | 'waiting' | 'declined' | 'reported'
+
+export interface LandlordMessage {
+  id: string
+  landlordName: string
+  landlordRole: LandlordRole
+  landlordVerified: boolean
+  email: string
+  phone?: string
+  propertyArea: string
+  propertyDescription: string
+  monthlyRent: string
+  availableFrom: string
+  message: string
+  photos: string[]
+  listingLink?: string
+  status: MessageStatus
+  receivedAt: string
+  read: boolean
+}
+
+export const landlordRoleLabels: Record<LandlordRole, string> = {
+  'private-landlord': 'Private landlord',
+  'agent': 'Agent',
+  'property-manager': 'Property manager'
+}
+
+export const messageStatusLabels: Record<MessageStatus, string> = {
+  'new': 'New',
+  'interested': 'Interested',
+  'waiting': 'Waiting for info',
+  'declined': 'Declined',
+  'reported': 'Reported'
+}
+
+export const mockLandlordMessages: LandlordMessage[] = [
+  {
+    id: 'msg-1',
+    landlordName: 'Anna Kovács',
+    landlordRole: 'private-landlord',
+    landlordVerified: true,
+    email: 'anna.kovacs@example.com',
+    phone: '+36 30 123 4567',
+    propertyArea: 'District VI, near Oktogon',
+    propertyDescription: 'Furnished 1-bedroom near Oktogon',
+    monthlyRent: '€1,050/month',
+    availableFrom: 'September 1, 2024',
+    message: 'Hi Sofia, I have a furnished one-bedroom apartment in District VI that may match your profile. It is available from September and close to public transport. The apartment has a balcony and is very bright.',
+    photos: ['/apartment-1.jpg', '/apartment-2.jpg', '/apartment-3.jpg'],
+    listingLink: 'https://example.com/listing/12345',
+    status: 'new',
+    receivedAt: '2024-08-15T10:30:00Z',
+    read: false
+  },
+  {
+    id: 'msg-2',
+    landlordName: 'Peter Nagy',
+    landlordRole: 'agent',
+    landlordVerified: true,
+    email: 'peter.nagy@realestate.hu',
+    phone: '+36 20 987 6543',
+    propertyArea: 'District VII, Jewish Quarter',
+    propertyDescription: 'Modern studio in the heart of Pest',
+    monthlyRent: '€850/month',
+    availableFrom: 'September 15, 2024',
+    message: 'Hello Sofia, I represent several property owners in the Jewish Quarter. I have a newly renovated studio that might interest you. Great location with cafes and restaurants nearby.',
+    photos: ['/studio-1.jpg', '/studio-2.jpg'],
+    status: 'interested',
+    receivedAt: '2024-08-14T14:20:00Z',
+    read: true
+  },
+  {
+    id: 'msg-3',
+    landlordName: 'Maria Tóth',
+    landlordRole: 'property-manager',
+    landlordVerified: false,
+    email: 'maria@pmbudapest.com',
+    propertyArea: 'District XIII, near Westend',
+    propertyDescription: 'Spacious 1-bedroom with parking',
+    monthlyRent: '€1,200/month',
+    availableFrom: 'October 1, 2024',
+    message: 'Dear Sofia, We manage several residential properties in District XIII. I have a spacious one-bedroom apartment with underground parking available. The building has a gym and 24/7 security.',
+    photos: ['/apt-xiii-1.jpg', '/apt-xiii-2.jpg', '/apt-xiii-3.jpg', '/apt-xiii-4.jpg'],
+    status: 'waiting',
+    receivedAt: '2024-08-13T09:15:00Z',
+    read: true
+  },
+  {
+    id: 'msg-4',
+    landlordName: 'John Smith',
+    landlordRole: 'private-landlord',
+    landlordVerified: false,
+    email: 'suspicious@fakemail.com',
+    propertyArea: 'District V, Parliament view',
+    propertyDescription: 'Luxury apartment with view',
+    monthlyRent: '€500/month',
+    availableFrom: 'Immediately',
+    message: 'URGENT! Beautiful luxury apartment with Parliament view for only 500 EUR! Send deposit now to secure!',
+    photos: [],
+    status: 'reported',
+    receivedAt: '2024-08-12T16:45:00Z',
+    read: true
+  }
+]
+
+export const reportReasons = [
+  'Suspicious listing',
+  'Asking for payment too early',
+  'Fake-looking photos',
+  'Wrong or unclear details',
+  'Spam',
+  'Other'
+]

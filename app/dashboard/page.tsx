@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { TrustBadgeList } from '@/components/trust-badge'
 import { Progress } from '@/components/ui/progress'
-import { mockRenter } from '@/lib/mock-data'
+import { mockRenter, mockLandlordMessages } from '@/lib/mock-data'
 import { cn } from '@/lib/utils'
 import { 
   Eye, 
@@ -26,12 +26,14 @@ import {
   Dog,
   LogOut,
   Settings,
-  Wallet
+  Wallet,
+  Mail
 } from 'lucide-react'
 
 export default function DashboardPage() {
   const [copied, setCopied] = useState(false)
   const renter = mockRenter
+  const newMessagesCount = mockLandlordMessages.filter(m => m.status === 'new').length
 
   const copyShareLink = () => {
     navigator.clipboard.writeText(`https://${renter.shareLink}`)
@@ -40,6 +42,13 @@ export default function DashboardPage() {
   }
 
   const actionCards = [
+    { 
+      title: 'Landlord messages', 
+      icon: Mail, 
+      href: '/dashboard/messages',
+      description: newMessagesCount > 0 ? `${newMessagesCount} new message${newMessagesCount > 1 ? 's' : ''}` : 'View property offers',
+      highlight: newMessagesCount > 0
+    },
     { 
       title: 'View public profile', 
       icon: Eye, 
@@ -247,23 +256,34 @@ function ActionCard({
   icon: Icon, 
   href, 
   onClick,
-  description 
+  description,
+  highlight
 }: { 
   title: string
   icon: React.ElementType
   href?: string
   onClick?: () => void
   description: string
+  highlight?: boolean
 }) {
   const content = (
-    <Card className="border-border/50 hover:border-primary/50 transition-colors cursor-pointer h-full">
+    <Card className={cn(
+      "border-border/50 hover:border-primary/50 transition-colors cursor-pointer h-full",
+      highlight && "border-primary bg-primary/5"
+    )}>
       <CardContent className="p-4 flex items-start gap-3">
-        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-          <Icon size={20} className="text-primary" />
+        <div className={cn(
+          "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0",
+          highlight ? "bg-primary text-primary-foreground" : "bg-primary/10"
+        )}>
+          <Icon size={20} className={highlight ? "text-primary-foreground" : "text-primary"} />
         </div>
         <div className="min-w-0">
           <h3 className="font-medium text-foreground">{title}</h3>
-          <p className="text-sm text-muted-foreground truncate">{description}</p>
+          <p className={cn(
+            "text-sm truncate",
+            highlight ? "text-primary font-medium" : "text-muted-foreground"
+          )}>{description}</p>
         </div>
       </CardContent>
     </Card>

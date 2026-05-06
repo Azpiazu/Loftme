@@ -26,6 +26,7 @@ export default function LandingPage() {
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
+            <p className="text-sm font-medium text-primary tracking-wide uppercase">Built for trust</p>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight text-balance">
               Create your rental profile once. Let landlords find you with trust.
             </h1>

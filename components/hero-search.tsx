@@ -31,8 +31,9 @@ export function HeroSearch() {
           className="pl-10"
         />
       </div>
-      <Button type="submit">
-        Search renters
+      <Button type="submit" size="icon" className="md:px-4 md:w-auto">
+        <Search className="h-4 w-4 md:hidden" />
+        <span className="hidden md:inline">Search renters</span>
       </Button>
     </form>
   )

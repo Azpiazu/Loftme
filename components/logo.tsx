@@ -7,10 +7,9 @@ interface LogoProps {
   className?: string
   size?: 'sm' | 'md' | 'lg'
   linkToHome?: boolean
-  showSlogan?: boolean
 }
 
-export function Logo({ className = '', size = 'md', linkToHome = true, showSlogan = false }: LogoProps) {
+export function Logo({ className = '', size = 'md', linkToHome = true }: LogoProps) {
   const sizes = {
     sm: { height: 32, width: 110 },
     md: { height: 40, width: 140 },
@@ -28,9 +27,6 @@ export function Logo({ className = '', size = 'md', linkToHome = true, showSloga
         height={height}
         priority
       />
-      {showSlogan && (
-        <span className="text-[10px] text-foreground/70 tracking-wide mt-0.5">Built for trust</span>
-      )}
     </div>
   )
 

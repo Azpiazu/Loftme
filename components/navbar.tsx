@@ -20,7 +20,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Logo size="md" />
+        <Logo size="sm" />
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6">

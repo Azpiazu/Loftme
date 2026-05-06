@@ -8,7 +8,6 @@ import { Card, CardContent } from '@/components/ui/card'
 import { TrustBadgeList } from '@/components/trust-badge'
 import { mockRenters } from '@/lib/mock-data'
 import { RequestContactModal } from '@/components/request-contact-modal'
-import { RequestDocumentModal } from '@/components/request-document-modal'
 import { 
   Home,
   Calendar,
@@ -132,10 +131,9 @@ export default function PublicProfilePage({ params }: { params: Promise<{ id: st
                     <Lock size={18} className="text-muted-foreground mt-0.5" />
                     <div className="flex-1">
                       <h3 className="font-medium text-foreground mb-1">Documents</h3>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        Available privately on request
+                      <p className="text-sm text-muted-foreground">
+                        Available privately on request through the contact form below.
                       </p>
-                      <RequestDocumentModal renterName={renter.firstName} />
                     </div>
                   </div>
                 </div>

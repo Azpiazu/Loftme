@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -238,7 +239,7 @@ export function DashboardPreview() {
                     email="anna@example.com"
                     phone="+36 30 123 4567"
                     status="new"
-                    hasPhotos
+                    photos={['/images/apartment-1.jpg', '/images/apartment-2.jpg', '/images/apartment-3.jpg']}
                   />
                   <MessageCard
                     landlordName="Peter Nagy"
@@ -249,7 +250,7 @@ export function DashboardPreview() {
                     email="peter@realestate.hu"
                     phone="+36 20 987 6543"
                     status="new"
-                    hasPhotos
+                    photos={['/images/studio-1.jpg', '/images/studio-2.jpg']}
                   />
                 </TabsContent>
                 
@@ -268,7 +269,7 @@ export function DashboardPreview() {
                     message="Dear Sofia, We manage several residential properties in District XIII. I have a spacious one-bedroom apartment with underground parking available."
                     email="maria@pmbudapest.com"
                     status="waiting"
-                    hasPhotos
+                    photos={['/images/apartment-1.jpg', '/images/apartment-3.jpg']}
                   />
                 </TabsContent>
                 
@@ -392,7 +393,7 @@ function MessageCard({
   email,
   phone,
   status,
-  hasPhotos
+  photos
 }: {
   landlordName: string
   landlordType: string
@@ -402,7 +403,7 @@ function MessageCard({
   email: string
   phone?: string
   status: 'new' | 'interested' | 'waiting' | 'declined' | 'reported'
-  hasPhotos?: boolean
+  photos?: string[]
 }) {
   const statusColors = {
     new: 'bg-primary/10 text-primary',
@@ -430,11 +431,16 @@ function MessageCard({
 
       <p className="text-sm text-muted-foreground line-clamp-2">{message}</p>
 
-      {hasPhotos && (
-        <div className="flex gap-2">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="w-16 h-12 bg-muted rounded flex items-center justify-center">
-              <ImageIcon className="h-4 w-4 text-muted-foreground" />
+      {photos && photos.length > 0 && (
+        <div className="flex gap-2 overflow-x-auto">
+          {photos.map((photo, i) => (
+            <div key={i} className="relative w-20 h-14 flex-shrink-0 rounded overflow-hidden">
+              <Image
+                src={photo}
+                alt={`Property photo ${i + 1}`}
+                fill
+                className="object-cover"
+              />
             </div>
           ))}
         </div>

@@ -65,9 +65,12 @@ export function ScrollReveal({
 
     if (animation === 'stagger') {
       // Stagger animation for child elements only
-      const childElements = element.children
+      const childElements = Array.from(element.children)
       if (childElements.length > 0) {
-        gsap.set(childElements, from)
+        // Set initial state on children
+        childElements.forEach(child => {
+          gsap.set(child, from)
+        })
         
         gsap.to(childElements, {
           ...to,
@@ -78,8 +81,7 @@ export function ScrollReveal({
           scrollTrigger: {
             trigger: element,
             start: 'top 85%',
-            end: 'bottom 20%',
-            toggleActions: 'play none none reverse'
+            once: true // Only animate once
           }
         })
       }
@@ -94,8 +96,7 @@ export function ScrollReveal({
         scrollTrigger: {
           trigger: element,
           start: 'top 85%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse'
+          once: true // Only animate once
         }
       })
     }

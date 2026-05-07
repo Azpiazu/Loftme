@@ -63,27 +63,29 @@ export function ScrollReveal({
 
     const { from, to } = animations[animation]
 
-    gsap.set(element, from)
-
     if (animation === 'stagger') {
-      // Stagger animation for child elements
-      const children = element.children
-      gsap.set(children, from)
-      
-      gsap.to(children, {
-        ...to,
-        duration,
-        delay,
-        stagger: staggerDelay,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: element,
-          start: 'top 85%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse'
-        }
-      })
+      // Stagger animation for child elements only
+      const childElements = element.children
+      if (childElements.length > 0) {
+        gsap.set(childElements, from)
+        
+        gsap.to(childElements, {
+          ...to,
+          duration,
+          delay,
+          stagger: staggerDelay,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 85%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse'
+          }
+        })
+      }
     } else {
+      gsap.set(element, from)
+      
       gsap.to(element, {
         ...to,
         duration,

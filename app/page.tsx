@@ -5,6 +5,7 @@ import { ProfilePreviewCard } from '@/components/profile-preview-card'
 import { DashboardPreview } from '@/components/dashboard-preview'
 import { Logo } from '@/components/logo'
 import { HeroSearch } from '@/components/hero-search'
+import { ScrollReveal, ScrollProgress, Parallax } from '@/components/scroll-animations'
 import Link from 'next/link'
 import { 
   UserPlus, 
@@ -21,12 +22,13 @@ import { mockRenter } from '@/lib/mock-data'
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
+      <ScrollProgress />
       <Navbar />
       
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
+          <ScrollReveal animation="fadeUp" className="space-y-6">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight text-balance">
               Create your rental profile once. Let landlords find you with trust.
             </h1>
@@ -54,11 +56,12 @@ export default function LandingPage() {
               <p className="text-sm text-muted-foreground mb-3">Are you a landlord? Search verified renters:</p>
               <HeroSearch />
             </div>
-          </div>
+          </ScrollReveal>
           
-          <div className="lg:pl-8 relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-3xl blur-2xl opacity-60" />
-            <ProfilePreviewCard
+          <ScrollReveal animation="slideLeft" delay={0.3} className="lg:pl-8 relative">
+            <Parallax speed={0.2}>
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-3xl blur-2xl opacity-60" />
+              <ProfilePreviewCard
               name={`${mockRenter.firstName} ${mockRenter.lastName}`}
               intro="Relocating from Spain to Budapest for work. Looking for a furnished 1-bedroom apartment from September."
               budget={`${mockRenter.budgetCurrency}${mockRenter.budgetMin}–${mockRenter.budgetMax}/month`}
@@ -70,21 +73,22 @@ export default function LandingPage() {
               badges={mockRenter.badges}
               className="relative transform lg:rotate-1 lg:hover:rotate-0 transition-transform duration-300 shadow-xl"
             />
-          </div>
+            </Parallax>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* How it works for Renters */}
       <section id="for-renters" className="bg-secondary/30 py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <ScrollReveal animation="fadeUp" className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">How it works for renters</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Create a trusted rental profile in minutes and share it with any landlord, agent, or property manager.
             </p>
-          </div>
+          </ScrollReveal>
           
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <ScrollReveal animation="stagger" staggerDelay={0.15} className="grid md:grid-cols-3 gap-6 mb-12">
             <FeatureCard
               icon={<UserPlus className="h-6 w-6 text-primary" />}
               title="Create your profile"
@@ -100,7 +104,7 @@ export default function LandingPage() {
               title="Share anywhere"
               description="Use your Loftme profile link, PDF profile, email message or WhatsApp intro."
             />
-          </div>
+          </ScrollReveal>
 
           {/* Dashboard Preview - Expandable */}
           <DashboardPreview />
@@ -110,16 +114,16 @@ export default function LandingPage() {
       {/* For Landlords Section */}
       <section id="for-landlords" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <ScrollReveal animation="fadeUp" className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
               Find serious renters before the first message
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto">
               Search verified renter profiles by budget, move-in date, lease length, preferred areas and rental needs — without seeing private documents or contact details unless the renter chooses to share them.
             </p>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <ScrollReveal animation="stagger" staggerDelay={0.15} className="grid md:grid-cols-3 gap-6 mb-12">
             <FeatureCard
               icon={<BadgeCheck className="h-6 w-6 text-primary" />}
               title="Verified renter profiles"
@@ -135,9 +139,9 @@ export default function LandingPage() {
               title="Privacy-safe by default"
               description="Landlords see badges and rental preferences, not private files. Renters control what they share."
             />
-          </div>
+          </ScrollReveal>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <ScrollReveal animation="fadeUp" delay={0.2} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" asChild>
               <Link href="/search">
                 <Search className="mr-2 h-4 w-4" />
@@ -147,7 +151,7 @@ export default function LandingPage() {
             <Button size="lg" variant="outline" asChild>
               <Link href="/profile/sofia-m">See example renter profile</Link>
             </Button>
-          </div>
+          </ScrollReveal>
           
           <p className="text-center text-sm text-muted-foreground mt-4">
             Contact details and private documents are hidden by default. Renters decide what to share.
@@ -158,31 +162,32 @@ export default function LandingPage() {
       {/* Privacy Section */}
       <section id="privacy" className="bg-secondary/30 py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
+          <ScrollReveal animation="scale" className="max-w-3xl mx-auto text-center">
             <Lock className="h-12 w-12 text-primary mx-auto mb-6" />
             <h2 className="text-3xl font-bold text-foreground mb-4">Private by default</h2>
             <p className="text-lg text-muted-foreground mb-8">
               Landlords see your rental profile and verification badges, not your private documents. You decide when to share more.
             </p>
-            <div className="grid sm:grid-cols-3 gap-6 text-left">
-              <PrivacyPoint text="Contact details hidden by default" />
-              <PrivacyPoint text="Private documents never public" />
-              <PrivacyPoint text="Revoke access anytime" />
-            </div>
-          </div>
+          </ScrollReveal>
+          <ScrollReveal animation="stagger" staggerDelay={0.1} className="max-w-3xl mx-auto grid sm:grid-cols-3 gap-6 text-left">
+            <PrivacyPoint text="Contact details hidden by default" />
+            <PrivacyPoint text="Private documents never public" />
+            <PrivacyPoint text="Revoke access anytime" />
+          </ScrollReveal>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
-            Ready to look more serious as a renter?
-          </h2>
-          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-            Create your verified rental profile in minutes and share it with landlords anywhere.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <ScrollReveal animation="fadeUp">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Ready to look more serious as a renter?
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+              Create your verified rental profile in minutes and share it with landlords anywhere.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button size="lg" asChild>
               <Link href="/create-profile">
                 Create my profile
@@ -195,7 +200,8 @@ export default function LandingPage() {
                 I&apos;m a landlord
               </Link>
             </Button>
-          </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

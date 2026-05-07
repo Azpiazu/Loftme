@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   description: 'Loftme helps renters build a verified rental profile they can share anywhere — while landlords can search serious renters without seeing private contact details or documents by default.',
   generator: 'Loftme',
   keywords: ['rental profile', 'renter verification', 'landlord search', 'rental application', 'tenant profile'],
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export const viewport: Viewport = {
